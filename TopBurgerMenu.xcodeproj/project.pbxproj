@@ -20,6 +20,14 @@
 		52D7BC4F266BF5D30032E52F /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7BC4E266BF5D30032E52F /* UIViewController+Ext.swift */; };
 		52D7BC5D266D2A840032E52F /* TopMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7BC5C266D2A840032E52F /* TopMenuView.swift */; };
 		52D7BC61266D2AE00032E52F /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7BC60266D2AE00032E52F /* UIView+Ext.swift */; };
+		52D7BC66266D64A10032E52F /* MenuSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7BC65266D64A10032E52F /* MenuSectionCell.swift */; };
+		52D7BC69266D65040032E52F /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7BC68266D65040032E52F /* UIFont+Ext.swift */; };
+		52D7BC6C266D651C0032E52F /* UIDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7BC6B266D651C0032E52F /* UIDevice+Ext.swift */; };
+		52D7BC73266D654D0032E52F /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D7BC70266D653B0032E52F /* Lato-Bold.ttf */; };
+		52D7BC75266D654F0032E52F /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D7BC6F266D653B0032E52F /* Lato-Regular.ttf */; };
+		52D7BC77266D65510032E52F /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52D7BC6E266D653B0032E52F /* Lato-Light.ttf */; };
+		52D7BC7A266D6B600032E52F /* TopMenuCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7BC79266D6B600032E52F /* TopMenuCollectionView.swift */; };
+		52D7BC7E266E758B0032E52F /* TopMenuLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7BC7D266E758B0032E52F /* TopMenuLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +46,14 @@
 		52D7BC4E266BF5D30032E52F /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		52D7BC5C266D2A840032E52F /* TopMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMenuView.swift; sourceTree = "<group>"; };
 		52D7BC60266D2AE00032E52F /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		52D7BC65266D64A10032E52F /* MenuSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionCell.swift; sourceTree = "<group>"; };
+		52D7BC68266D65040032E52F /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
+		52D7BC6B266D651C0032E52F /* UIDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Ext.swift"; sourceTree = "<group>"; };
+		52D7BC6E266D653B0032E52F /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		52D7BC6F266D653B0032E52F /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		52D7BC70266D653B0032E52F /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		52D7BC79266D6B600032E52F /* TopMenuCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMenuCollectionView.swift; sourceTree = "<group>"; };
+		52D7BC7D266E758B0032E52F /* TopMenuLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMenuLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,10 +88,12 @@
 			children = (
 				52D7BC23266BF1770032E52F /* AppDelegate.swift */,
 				52D7BC25266BF1770032E52F /* SceneDelegate.swift */,
+				52D7BC7C266E75810032E52F /* Layouts */,
 				52D7BC4D266BF5C70032E52F /* Extensions */,
 				52D7BC47266BF1FF0032E52F /* Colors */,
 				52D7BC5A266D2A6F0032E52F /* Views */,
 				52D7BC38266BF1A50032E52F /* Controllers */,
+				52D7BC71266D653E0032E52F /* Fonts */,
 				52D7BC2C266BF17A0032E52F /* Assets.xcassets */,
 				52D7BC2E266BF17A0032E52F /* LaunchScreen.storyboard */,
 				52D7BC31266BF17A0032E52F /* Info.plist */,
@@ -104,6 +122,8 @@
 			children = (
 				52D7BC4E266BF5D30032E52F /* UIViewController+Ext.swift */,
 				52D7BC60266D2AE00032E52F /* UIView+Ext.swift */,
+				52D7BC68266D65040032E52F /* UIFont+Ext.swift */,
+				52D7BC6B266D651C0032E52F /* UIDevice+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -132,8 +152,36 @@
 			isa = PBXGroup;
 			children = (
 				52D7BC5C266D2A840032E52F /* TopMenuView.swift */,
+				52D7BC79266D6B600032E52F /* TopMenuCollectionView.swift */,
+				52D7BC65266D64A10032E52F /* MenuSectionCell.swift */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		52D7BC71266D653E0032E52F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				52D7BC72266D65490032E52F /* Lato */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		52D7BC72266D65490032E52F /* Lato */ = {
+			isa = PBXGroup;
+			children = (
+				52D7BC70266D653B0032E52F /* Lato-Bold.ttf */,
+				52D7BC6E266D653B0032E52F /* Lato-Light.ttf */,
+				52D7BC6F266D653B0032E52F /* Lato-Regular.ttf */,
+			);
+			path = Lato;
+			sourceTree = "<group>";
+		};
+		52D7BC7C266E75810032E52F /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				52D7BC7D266E758B0032E52F /* TopMenuLayout.swift */,
+			);
+			path = Layouts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,8 +241,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52D7BC77266D65510032E52F /* Lato-Light.ttf in Resources */,
 				52D7BC30266BF17A0032E52F /* LaunchScreen.storyboard in Resources */,
+				52D7BC73266D654D0032E52F /* Lato-Bold.ttf in Resources */,
 				52D7BC2D266BF17A0032E52F /* Assets.xcassets in Resources */,
+				52D7BC75266D654F0032E52F /* Lato-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,14 +258,19 @@
 			files = (
 				52D7BC3B266BF1BF0032E52F /* GroupsViewController.swift in Sources */,
 				52D7BC49266BF2070032E52F /* Colors.swift in Sources */,
+				52D7BC69266D65040032E52F /* UIFont+Ext.swift in Sources */,
 				52D7BC28266BF1770032E52F /* ProfileViewController.swift in Sources */,
+				52D7BC7E266E758B0032E52F /* TopMenuLayout.swift in Sources */,
 				52D7BC5D266D2A840032E52F /* TopMenuView.swift in Sources */,
+				52D7BC6C266D651C0032E52F /* UIDevice+Ext.swift in Sources */,
 				52D7BC44266BF1D50032E52F /* SettingsViewController.swift in Sources */,
 				52D7BC3E266BF1C70032E52F /* ChatsViewController.swift in Sources */,
 				52D7BC24266BF1770032E52F /* AppDelegate.swift in Sources */,
 				52D7BC61266D2AE00032E52F /* UIView+Ext.swift in Sources */,
 				52D7BC41266BF1CE0032E52F /* FriendsViewController.swift in Sources */,
 				52D7BC26266BF1770032E52F /* SceneDelegate.swift in Sources */,
+				52D7BC7A266D6B600032E52F /* TopMenuCollectionView.swift in Sources */,
+				52D7BC66266D64A10032E52F /* MenuSectionCell.swift in Sources */,
 				52D7BC4F266BF5D30032E52F /* UIViewController+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

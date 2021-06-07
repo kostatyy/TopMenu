@@ -14,10 +14,9 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private var contentRadiusFactor: CGFloat!
     private var contentRadiusMax: CGFloat = 30
-    private var contentYPosMax: CGFloat = UIScreen.main.bounds.height / 3
+    private var contentYPosMax: CGFloat = UIScreen.main.bounds.height / 2
     
     private var menuShow: Bool = false
-    private var savedPoint: CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,18 +32,23 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         topMenu = TopMenuView(frame: view.frame)
         contentView = UIView(frame: view.frame)
         contentView.backgroundColor = .profileBgColor
+        contentView.setupShadow(cornerRad: 30, shadowRad: 15, shadowOp: 0.3, offset: CGSize(width: 5, height: 5))
         addMenuView(menuView: topMenu, controllerContent: contentView)
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         panGestureRecognizer.delegate = self
         contentView.addGestureRecognizer(panGestureRecognizer)
+        
+        let tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        contentView.addGestureRecognizer(tapGestureRecogniser)
+
     }
     
     @objc private func handlePanGesture(sender: UIPanGestureRecognizer) {
         let content = sender.view
         let point = sender.translation(in: self.view)
         var yFromCenter = (content?.center.y)! - view.center.y
-        var scale = min(200 / abs(yFromCenter), 1)
+        var scale = min(300 / abs(yFromCenter), 1)
                 
         if sender.state == .began || sender.state == .changed {
             if (yFromCenter <= contentYPosMax && yFromCenter >= 0) {
@@ -59,7 +63,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
             print(point.y)
             if yFromCenter > view.center.y * 0.2 {
                 yFromCenter = contentYPosMax
-                scale = min(200 / abs(yFromCenter), 1)
+                scale = min(300 / abs(yFromCenter), 1)
                 
                 UIView.animate(withDuration: 0.2) {
                     content?.layer.cornerRadius = self.contentRadiusMax
@@ -67,7 +71,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                     content?.transform = CGAffineTransform(scaleX: scale, y: scale)
                 } completion: { (_) in
                     self.menuShow = true
-                    self.savedPoint = point
                 }
 
             } else {
@@ -77,8 +80,20 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                     content?.transform = CGAffineTransform(scaleX: 1, y: 1)
                 } completion: { (_) in
                     self.menuShow = false
-                    self.savedPoint = nil
                 }
+            }
+        }
+    }
+    
+    @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
+        let content = sender.view
+        if menuShow {
+            UIView.animate(withDuration: 0.2) {
+                content?.layer.cornerRadius = 0
+                content?.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
+                content?.transform = CGAffineTransform(scaleX: 1, y: 1)
+            } completion: { (_) in
+                self.menuShow = false
             }
         }
     }
