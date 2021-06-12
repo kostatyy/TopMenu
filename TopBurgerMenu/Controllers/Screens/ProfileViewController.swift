@@ -7,96 +7,48 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
+class ProfileViewController: UIViewController, BaseViewControllerProtocol {
     
     private var topMenu: TopMenuView!
-    private var contentView: UIView!
+    private var contentView: ContentView!
+    private var sectionTitle: ScreentTitle = .Profile
     
-    private var contentRadiusFactor: CGFloat!
-    private var contentRadiusMax: CGFloat = 30
-    private var contentYPosMax: CGFloat = UIScreen.main.bounds.height / 2
-    
-    private var menuShow: Bool = false
+    var isChoosen: Bool = false
+    var menuShow: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         customizeViewController(navTitle: "Profile")
         
-        contentRadiusFactor = (view.frame.width / 2) / contentRadiusMax
-        setupMenu()
+        setupContent()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(goToSectionFromMenu(notification:)), name: NSNotification.Name(rawValue: "SectionChangeTap"), object: nil)
     }
     
-    /* Setting Up Menu */
-    private func setupMenu() {
-        topMenu = TopMenuView(frame: view.frame)
-        contentView = UIView(frame: view.frame)
-        contentView.backgroundColor = .profileBgColor
-        contentView.setupShadow(cornerRad: 30, shadowRad: 15, shadowOp: 0.3, offset: CGSize(width: 5, height: 5))
-        addMenuView(menuView: topMenu, controllerContent: contentView)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let collectionView = topMenu.menuSectionsCollectionView!
+        
+        let layout = collectionView.collectionViewLayout as! TopMenuLayout
+        let pageLength = layout.itemSize.height + layout.minimumLineSpacing
+        
+        topMenu.menuSectionsCollectionView.setContentOffset(CGPoint(x: 0, y: Int(pageLength) * sectionTitle.index), animated: false)
+    }
+    
+    // Setting Up Content And Top Menu
+    private func setupContent() {
+        topMenu = TopMenuView(frame: view.frame, screenTitle: sectionTitle)
+        contentView = ContentView(frame: view.frame, bgColor: .profileBgColor)
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
-        panGestureRecognizer.delegate = self
-        contentView.addGestureRecognizer(panGestureRecognizer)
-        
         let tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
-        contentView.addGestureRecognizer(tapGestureRecogniser)
-
-    }
-    
-    @objc private func handlePanGesture(sender: UIPanGestureRecognizer) {
-        let content = sender.view
-        let point = sender.translation(in: self.view)
-        var yFromCenter = (content?.center.y)! - view.center.y
-        var scale = min(300 / abs(yFromCenter), 1)
-                
-        if sender.state == .began || sender.state == .changed {
-            if (yFromCenter <= contentYPosMax && yFromCenter >= 0) {
-                content?.center = CGPoint(x: view.center.x, y: content!.center.y + point.y)
-                content?.transform = CGAffineTransform(scaleX: scale, y: scale)
-                content?.layer.cornerRadius = yFromCenter / contentRadiusFactor
-            }
-            sender.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
-        }
         
-        if sender.state == .ended {
-            print(point.y)
-            if yFromCenter > view.center.y * 0.2 {
-                yFromCenter = contentYPosMax
-                scale = min(300 / abs(yFromCenter), 1)
-                
-                UIView.animate(withDuration: 0.2) {
-                    content?.layer.cornerRadius = self.contentRadiusMax
-                    content?.center = CGPoint(x: self.view.center.x, y: self.view.center.y + self.contentYPosMax * 0.99)
-                    content?.transform = CGAffineTransform(scaleX: scale, y: scale)
-                } completion: { (_) in
-                    self.menuShow = true
-                }
-
-            } else {
-                UIView.animate(withDuration: 0.2) {
-                    content?.layer.cornerRadius = 0
-                    content?.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
-                    content?.transform = CGAffineTransform(scaleX: 1, y: 1)
-                } completion: { (_) in
-                    self.menuShow = false
-                }
-            }
-        }
+        contentView.gestureRecognizers = [panGestureRecognizer, tapGestureRecogniser]
+        
+        addMenuView(menuView: topMenu, menuShow: &menuShow, isChoosen: isChoosen, controllerContent: contentView)
     }
     
-    @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
-        let content = sender.view
-        if menuShow {
-            UIView.animate(withDuration: 0.2) {
-                content?.layer.cornerRadius = 0
-                content?.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
-                content?.transform = CGAffineTransform(scaleX: 1, y: 1)
-            } completion: { (_) in
-                self.menuShow = false
-            }
-        }
-    }
-
 }
 

@@ -7,11 +7,10 @@
 
 import UIKit
 
-class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
+class TopMenuLayout: UICollectionViewFlowLayout {
     
     let activeDistance: CGFloat = 200
     let zoomFactor: CGFloat = 0.3
-    let numberOfItemsPerPage: CGFloat = 1
     let velocityPerPage: CGFloat = 2
     
     // Cell Size Vars
@@ -32,9 +31,11 @@ class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
     
     override func prepare() {
         guard let collectionView = collectionView else { fatalError() }
-        let verticalInsets = (collectionView.frame.height - collectionView.adjustedContentInset.top - collectionView.adjustedContentInset.bottom - itemSize.height) / 2
-        let horizontalInsets = (collectionView.frame.width - collectionView.adjustedContentInset.right - collectionView.adjustedContentInset.left - itemSize.width) / 2
-        sectionInset = UIEdgeInsets(top: verticalInsets, left: horizontalInsets, bottom: verticalInsets, right: horizontalInsets)
+        
+        let verticalInset: CGFloat = (collectionView.bounds.height - itemSize.height) / 2
+        sectionInset = UIEdgeInsets(top: verticalInset, left: .zero, bottom: verticalInset, right: .zero)
+        
+        
         
         super.prepare()
     }
@@ -71,7 +72,7 @@ class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
         var currentPage: CGFloat
         var speed: CGFloat
         
-        pageLength = (self.itemSize.height + self.minimumLineSpacing) * numberOfItemsPerPage
+        pageLength = self.itemSize.height + self.minimumLineSpacing
         approxPage = collectionView.contentOffset.y / pageLength
         speed = velocity.y
         
@@ -84,6 +85,10 @@ class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
         }
         
         guard speed != 0 else {
+            print(currentPage)
+            let slidedSection: ScreentTitle = ScreentTitle.allCases[roundForRange(num: Int(currentPage))]
+            let sectionInfo: [String: Any] = ["sectionIndex": slidedSection]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SectionChangeTap"), object: nil, userInfo: sectionInfo)
             return CGPoint(x: 0, y: currentPage * pageLength)
         }
         
@@ -92,6 +97,10 @@ class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
         let increment = speed / velocityPerPage
         nextPage += (speed < 0) ? ceil(increment) : floor(increment)
         
+        print(nextPage)
+        let slidedSection: ScreentTitle = ScreentTitle.allCases[roundForRange(num: Int(nextPage))]
+        let sectionInfo: [String: Any] = ["sectionIndex": slidedSection]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SectionChangeTap"), object: nil, userInfo: sectionInfo)
         return CGPoint(x: 0, y: nextPage * pageLength)
     }
     
@@ -100,4 +109,13 @@ class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
         return true
     }
     
+}
+
+extension TopMenuLayout {
+    // Round Number In Range
+    func roundForRange(num: Int) -> Int {
+        if num > 4 { return 4 }
+        if num < 0 { return 0 }
+        return num
+    }
 }

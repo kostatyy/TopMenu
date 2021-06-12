@@ -10,9 +10,13 @@ import UIKit
 class TopMenuView: UIView {
     
     // Sections Collection View
-    private var menuSectionsCollectionView: TopMenuCollectionView!
+    var menuSectionsCollectionView: TopMenuCollectionView!
+    private var selectedScreenTitle: ScreentTitle
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, screenTitle: ScreentTitle) {
+        
+        self.selectedScreenTitle = screenTitle
+        
         super.init(frame: frame)
         
         setupViews()

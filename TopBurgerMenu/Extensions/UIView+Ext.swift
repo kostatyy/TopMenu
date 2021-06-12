@@ -32,13 +32,6 @@ extension UIView {
         self.layer.shouldRasterize = true
         self.layer.rasterizationScale = UIScreen.main.scale
     }
-    
-    enum Edge {
-        case top
-        case bottom
-        case left
-        case right
-    }
 
     func pinToEdges(edges: [Edge] = [.top, .bottom, .left, .right], constant: CGFloat = 0) {
         guard let superview = superview else {return}
